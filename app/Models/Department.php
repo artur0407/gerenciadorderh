@@ -9,9 +9,11 @@ class Department extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function users()
     {
         // cada departamento pode ter multiplos usuários
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
 }
