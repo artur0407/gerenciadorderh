@@ -9,6 +9,8 @@ class UserDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['address', 'zip_code', 'city', 'phone', 'salary', 'admission_date'];
+
     public function user()
     {
         // cada usuário tem um(hasone) user_details ou cada user_details pertence(belongsto) a um usuário
