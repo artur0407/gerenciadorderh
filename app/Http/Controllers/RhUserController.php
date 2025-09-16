@@ -14,7 +14,8 @@ class RhUserController
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
-        $colaborators = User::where('role', 'rh')->get();
+        // $colaborators = User::where('role', 'rh')->get();
+        $colaborators = User::with('detail')->where('role', 'rh')->get();
 
         return view('colaborators.rh-users', compact('colaborators'));
     }

@@ -17,11 +17,14 @@
                 <a href="{{ route('colaborators.rh-new') }}" class="btn btn-primary">Criar novo colaborador</a>
             </div>
 
-            <table class="table w-50" id="table">
+            <table class="table" id="table">
                 <thead class="table-dark">
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Permissões</th>
+                    <th>Admissão</th>
+                    <th>Cidade</th>
                     <th></th>
                 </thead>
                 <tbody>
@@ -29,10 +32,13 @@
                         <tr>
                             <td>{{ $colaborator->name }}</td>
                             <td>{{ $colaborator->email }}</td>
+                            <td>{{ $colaborator->role }}</td>
                             @php
                                 $permissions = json_decode($colaborator->permissions)
                             @endphp
                             <td>{{ implode(', ', $permissions) }}</td>
+                            <td>{{ $colaborator->detail->admission_date }}</td>
+                            <td>{{ $colaborator->detail->city }}</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
                                     <a href="" 
