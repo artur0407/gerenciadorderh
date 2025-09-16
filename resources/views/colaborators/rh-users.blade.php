@@ -22,7 +22,7 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Permissões</th>
+                    <th>Salário</th>
                     <th>Admissão</th>
                     <th>Cidade</th>
                     <th></th>
@@ -33,20 +33,17 @@
                             <td>{{ $colaborator->name }}</td>
                             <td>{{ $colaborator->email }}</td>
                             <td>{{ $colaborator->role }}</td>
-                            @php
-                                $permissions = json_decode($colaborator->permissions)
-                            @endphp
-                            <td>{{ implode(', ', $permissions) }}</td>
+                            <td>{{ $colaborator->detail->salary }}</td>
                             <td>{{ $colaborator->detail->admission_date }}</td>
                             <td>{{ $colaborator->detail->city }}</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
-                                    <a href="" 
+                                    <a href="{{ route('colaborators.rh-edit', ['id' => $colaborator->id]) }}" 
                                         class="btn btn-sm btn-outline-dark">
                                         <i class="fa-regular fa-pen-to-square me-2"></i>
                                         Edit
                                     </a>
-                                    <a href="" 
+                                    <a href="{{ route('colaborators.rh-delete', ['id' => $colaborator->id]) }}" 
                                         class="btn btn-sm btn-outline-dark">
                                         <i class="fa-regular fa-trash-can me-2"></i>
                                         Delete
