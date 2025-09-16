@@ -47,6 +47,11 @@ class RhUserController
             'admission_date' => 'required|date_format:Y-m-d'
         ]);
 
+        // check if department d === 2
+        if ($request->select_department != 2) {
+             return redirect()->route('home');
+        }
+
         // create new rh user
         $user = new User();
         $user->name = $request->name;

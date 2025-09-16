@@ -49,8 +49,8 @@ class DepartmentController
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
-        if (intval($id) === 1) {
-            return redirect()->route('deparments');
+        if ($this->isDepartmentBlocked($id)) {
+            return redirect()->route('departments');
         }
 
         $department = Department::findOrFail($id);
@@ -62,18 +62,18 @@ class DepartmentController
     {
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-        
+
         $id = $request->id;
+
+        if ($this->isDepartmentBlocked($id)) {
+            return redirect()->route('departments');
+        }
         
         // form validation
         $request->validate([
             'id' => 'required',
             'name' => 'required|string|min:3|max:50|unique:departments,name,'.$id
         ]);
-
-        if (intval($id) === 1) {
-            return redirect()->route('departments');
-        }
 
         $department = Department::findOrFail($id);
 
@@ -89,7 +89,7 @@ class DepartmentController
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
-        if (intval($id) === 1) {
+        if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -103,7 +103,7 @@ class DepartmentController
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
-        if (intval($id) === 1) {
+        if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -112,5 +112,10 @@ class DepartmentController
         $department->delete();
 
         return redirect()->route('departments');
+    }
+
+    public function isDepartmentBlocked($id)
+    {
+        return in_array(intval($id), [1,2]);
     }
 }
