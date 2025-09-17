@@ -1,6 +1,6 @@
 <div class="d-flex flex-column sidebar pt-4">
     
-    <a href="{{ route('home') }}"><i class="fas fa-home me-3"></i>Menu Item</a>
+    <a href="{{ route('home') }}"><i class="fas fa-home me-3"></i>Home</a>
 
     @can('admin')
         <a href="{{ route('colaborators') }}" class=""><i class="fas fa-users me-3"></i>Colaboradores</a>

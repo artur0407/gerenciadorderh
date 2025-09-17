@@ -34,6 +34,11 @@ class ColaboratorsController
                         ->where('id', $id)
                         ->first();
         
+        // check if colaborator existis
+        if (!$colaborator) {
+            abort(404);
+        }
+        
         return view('colaborators.show-details')->with('colaborator', $colaborator);
     }
 
