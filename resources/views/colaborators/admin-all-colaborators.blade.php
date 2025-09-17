@@ -32,31 +32,40 @@
                                     <span class="badge bg-danger">No</span>
                                 @else
                                     <span class="badge bg-success">Yes</span>
-                                @endif
-                            </td>
-                            <td>{{ $colaborator->department->name }}</td>
-                            <td>{{ $colaborator->name }}</td>
-                            <td>{{ $colaborator->detail->admission_date }}</td>
-                            <td>{{ $colaborator->detail->salary }}</td>
-                            <td>
-                                <div class="d-flex gap-3 justify-content-end">
-                                    <a href="{{ route('colaborators.details', ['id' => $colaborator->id]) }}" 
-                                        class="btn btn-sm btn-outline-dark">
-                                        <i class="fas fa-eye me-2"></i>
-                                        Detalhes
-                                    </a>
-                                    <a href="{{ route('colaborators.delete', ['id' => $colaborator->id]) }}" 
+                        @endif
+                        </td>
+                        <td>{{ $colaborator->department->name }}</td>
+                        <td>{{ $colaborator->name }}</td>
+                        <td>{{ $colaborator->detail->admission_date }}</td>
+                        <td>{{ $colaborator->detail->salary }}</td>
+                        <td>
+                            <div class="d-flex gap-3 justify-content-end">
+                                <a href="{{ route('colaborators.details', ['id' => $colaborator->id]) }}"
+                                    class="btn btn-sm btn-outline-dark">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Detalhes
+                                </a>
+                                @if (empty($colaborator->deleted_at))
+                                    <a href="{{ route('colaborators.delete', ['id' => $colaborator->id]) }}"
                                         class="btn btn-sm btn-outline-dark">
                                         <i class="fa-regular fa-trash-can me-2"></i>
                                         Delete
                                     </a>
-                                </div>
-                            </td>
+                                @else
+                                    <a href="{{ route('colaborators.restore', ['id' => $colaborator->id]) }}"
+                                        class="btn btn-sm btn-outline-dark">
+                                        <i class="fa-solid fa-trash-arrow-up me-2"></i>
+                                        Restore
+                                    </a>
+                                @endif
+
+                            </div>
+                        </td>
                         </tr>
-                    @endforeach
-                </tbody>
+            @endforeach
+            </tbody>
             </table>
-        @endif
-    </div>
-    <!-- table -->
-</x-layout-app>
+            @endif
+        </div>
+        <!-- table -->
+    </x-layout-app>

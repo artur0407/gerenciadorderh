@@ -1,5 +1,5 @@
 <x-layout-app page-title="Recursos Humanos">
-    
+
     <div class="w-100 p-4">
 
         <h3>Colaboradores dos Recursos Humanos</h3>
@@ -46,16 +46,25 @@
                             <td>{{ $colaborator->detail->salary }}</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
-                                    <a href="{{ route('colaborators.rh-edit', ['id' => $colaborator->id]) }}" 
+                                    <a href="{{ route('colaborators.rh-edit', ['id' => $colaborator->id]) }}"
                                         class="btn btn-sm btn-outline-dark">
                                         <i class="fa-regular fa-pen-to-square me-2"></i>
                                         Edit
                                     </a>
-                                    <a href="{{ route('colaborators.rh-delete', ['id' => $colaborator->id]) }}" 
-                                        class="btn btn-sm btn-outline-dark">
-                                        <i class="fa-regular fa-trash-can me-2"></i>
-                                        Delete
-                                    </a>
+
+                                    @if (empty($colaborator->deleted_at))
+                                        <a href="{{ route('colaborators.rh-delete', ['id' => $colaborator->id]) }}"
+                                            class="btn btn-sm btn-outline-dark">
+                                            <i class="fa-regular fa-trash-can me-2"></i>
+                                            Delete
+                                        </a>
+                                    @else
+                                        <a href="{{ route('colaborators.rh-restore', ['id' => $colaborator->id]) }}"
+                                            class="btn btn-sm btn-outline-dark">
+                                            <i class="fa-solid fa-trash-arrow-up me-2"></i>
+                                            Restaurar
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

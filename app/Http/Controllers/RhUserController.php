@@ -18,7 +18,10 @@ class RhUserController
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
         // $colaborators = User::where('role', 'rh')->get();
-        $colaborators = User::with('detail')->where('role', 'rh')->get();
+        $colaborators = User::withTrashed()
+                        ->with('detail')
+                        ->where('role', 'rh')
+                        ->get();
 
         return view('colaborators.rh-users', compact('colaborators'));
     }
@@ -135,5 +138,17 @@ class RhUserController
         $colaborator->delete();
 
         return redirect()->route('colaborators.rh')->with('success', 'Colaborador deletado com sucesso!');
+    }
+
+    public function restoreRhColaborator($id)
+    {
+        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        // get user removed with softDelete
+        $colaborator = User::withTrashed()->where('role', 'rh')->findOrFail($id);
+        $colaborator->restore();
+
+        return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
     }
 }

@@ -13,7 +13,8 @@ class ColaboratorsController
         // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
         Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
 
-        $colaborators = User::with('detail', 'department')
+        $colaborators = User::withTrashed()
+                        ->with('detail', 'department')
                         ->where('role', '<>', 'admin')
                         ->get();
         
@@ -65,5 +66,17 @@ class ColaboratorsController
         $colaborator->delete();
 
         return redirect()->route('colaborators')->with('success', 'Colaborador deletado com sucesso!');
+    }
+
+    public function restoreColaborator($id)
+    {
+        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        // get user removed with softDelete
+        $colaborator = User::withTrashed()->findOrFail($id);
+        $colaborator->restore();
+
+        return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
     }
 }
