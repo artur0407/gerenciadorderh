@@ -45,7 +45,7 @@
                                         <i class="fas fa-eye me-2"></i>
                                         Detalhes
                                     </a>
-                                    <a href=""
+                                    <a href="{{ route('colaborators.delete', ['id' => $colaborator->id]) }}" 
                                         class="btn btn-sm btn-outline-dark">
                                         <i class="fa-regular fa-trash-can me-2"></i>
                                         Delete

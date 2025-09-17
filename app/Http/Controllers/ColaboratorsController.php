@@ -35,4 +35,35 @@ class ColaboratorsController
         
         return view('colaborators.show-details')->with('colaborator', $colaborator);
     }
+
+    public function deleteColaborator($id)
+    {
+        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        // check if id is the same as the auth user
+        if (Auth::user()->id === $id) {
+            return redirect()->route('home');
+        }
+
+        $colaborator = User::findOrFail($id);
+
+        return view('colaborators.delete-colaborator-confirm')->with('colaborator', $colaborator);
+    }
+
+    public function deleteColaboratorConfirm($id)
+    {
+        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        // check if id is the same as the auth user
+        if (Auth::user()->id === $id) {
+            return redirect()->route('home');
+        }
+
+        $colaborator = User::findOrFail($id);
+        $colaborator->delete();
+
+        return redirect()->route('colaborators')->with('success', 'Colaborador deletado com sucesso!');
+    }
 }
