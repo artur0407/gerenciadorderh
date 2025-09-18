@@ -27,10 +27,15 @@
 
                         <div class="col">
                             <div class="mb-3">
-                                <label for="salary" class="form-label">Salary</label>
-                                <input type="number" class="form-control" id="salary" name="salary" step=".01"
-                                    placeholder="0,00" value="{{ old('salary', $colaborator->detail->salary) }}">
-                                @error('salary')
+                                <label for="select_department">Department</label>
+                                <select class="form-select" id="select_department" name="select_department">
+                                    @foreach ($departments as $department)
+                                        @if ($department->id === 2)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('select_department')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -40,7 +45,8 @@
                             <div class="mb-3">
                                 <label for="admission_date" class="form-label">Admission Date</label>
                                 <input type="text" class="form-control" id="admission_date" name="admission_date"
-                                    placeholder="YYYY-mm-dd" value="{{ old('admission_date', $colaborator->detail->admission_date) }}">
+                                    placeholder="YYYY-mm-dd"
+                                    value="{{ old('admission_date', $colaborator->detail->admission_date) }}">
                                 @error('admission_date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

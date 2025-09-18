@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ColaboratorsController;
 use App\Http\Controllers\ConfirmAccountController;
 use App\Http\Controllers\DepartmentController;
@@ -20,7 +21,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/home', function() {
     // check if user is admin
     if (auth()->user()->role === 'admin') {
-      die('initial page ADMIN');
+      return redirect()->route('admin.home');
     } else if (auth()->user()->role === 'rh') {
       return redirect()->route('rh.management.home');
     } else {
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/departments/delete-department/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
   Route::get('/departments/delete-department-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-confirm');
 
-  // rh colaborators routes
+  // admin rh colaborators
   Route::get('/rh-users', [RhUserController::class, 'index'])->name('colaborators.rh');
   Route::get('/rh-users/new-colaborator', [RhUserController::class, 'newColaborator'])->name('colaborators.rh-new');
   Route::post('/rh-users/create-colaborator', [RhUserController::class, 'createColaborator'])->name('colaborators.rh-create');
@@ -54,11 +55,19 @@ Route::middleware('auth')->group(function () {
 
   // rh colaborators routes
   Route::get('/rh-users/management/home', [RhManagementController::class, 'home'])->name('rh.management.home');
+  Route::get('/rh-users/management/new-colaborator', [RhManagementController::class, 'newColaborator'])->name('rh.management.new');
+  Route::post('/rh-users/management/create-colaborator', [RhManagementController::class, 'createColaborator'])->name('rh.management.create');
+  Route::get('/rh-users/management/edit-colaborator/{id}', [RhManagementController::class, 'editColaborator'])->name('rh.management.edit');
+  Route::post('/rh-users/management/update-colaborator', [RhManagementController::class, 'updateColaborator'])->name('rh.management.update');
+  Route::get('/rh-users/management/details/{id}', [RhManagementController::class, 'showDetails'])->name('rh.management.details');
 
-  // admin colaborators list
+  // admin colaborators
   Route::get('/colaborators', [ColaboratorsController::class, 'index'])->name('colaborators');
   Route::get('/colaborators/details/{id}', [ColaboratorsController::class, 'showDetails'])->name('colaborators.details');
   Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('colaborators.delete');
   Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-confirm');
   Route::get('/colaborators/restore/{id}', [ColaboratorsController::class, 'restoreColaborator'])->name('colaborators.restore');
+
+  // admin routes
+  Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
 });
