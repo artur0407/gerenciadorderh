@@ -138,4 +138,36 @@ class RhManagementController
 
         return view('colaborators.show-details', compact('colaborator'));
     }
+
+    public function deleteColaborator($id)
+    {
+        // se for rh não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        $colaborator = User::findOrFail($id);
+
+        return view('colaborators.delete-colaborator', compact('colaborator'));
+    }
+
+    public function deleteColaboratorConfirm($id)
+    {
+        // se for rh não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        $colaborator = User::findOrFail($id);
+        $colaborator->delete();
+
+        return redirect()->route('rh.management.home')->with('success', 'Colaborador alterado com sucesso!');
+    }
+
+    public function restoreColaborator($id)
+    {
+        // se for rh não faz nada e o código segue, se não for admin aborta com a mensagem
+        Auth::user()->can('rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        $colaborator = User::withTrashed()->findOrFail($id);
+        $colaborator->restore();
+
+        return redirect()->route('rh.management.home')->with('success', 'Colaborador restaurado com sucesso!');
+    }
 }
