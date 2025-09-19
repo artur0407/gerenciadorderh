@@ -84,4 +84,17 @@ class ColaboratorsController
 
         return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
     }
+
+    public function home()
+    {
+        // se for colaborador não faz nada e o código segue, se não for aborta com a mensagem
+        Auth::user()->can('colaborator') ?: abort(403, 'Você não tem autorização para acessar esta página');
+
+        // get colaborator data
+        $colaborator = User::with('detail', 'department')
+                        ->where('id', Auth::user()->id)
+                        ->first();
+
+        return view('colaborators.show-details', compact('colaborator'));
+    }
 }
