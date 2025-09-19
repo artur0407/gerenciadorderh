@@ -5,10 +5,10 @@
 
             @csrf
 
-            <h3>Change password</h3>
+            <h4>Alterar senha</h4>
 
             <div class="mb-3">
-                <label for="current_password" class="form-label">Current password</label>
+                <label for="current_password" class="form-label">Senha atual</label>
                 <input type="password" name="current_password" id="current_password" class="form-control">
                 @error('current_password')
                     <div class="text-danger">{{ $message }}</div>
@@ -16,7 +16,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="new_password" class="form-label">New password</label>
+                <label for="new_password" class="form-label">Nova senha</label>
                 <input type="password" name="new_password" id="new_password" class="form-control">
                 @error('new_password')
                     <div class="text-danger">{{ $message }}</div>
@@ -24,7 +24,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="new_password_confirmation" class="form-label">Confirm new password</label>
+                <label for="new_password_confirmation" class="form-label">Confirmar nova senha</label>
                 <input type="password" name="new_password_confirmation" id="new_password_confirmation"
                     class="form-control">
                 @error('new_password_confirmation')
@@ -33,7 +33,7 @@
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Change password</button>
+                <button type="submit" class="btn btn-primary">Atualizar</button>
             </div>
 
         </form>

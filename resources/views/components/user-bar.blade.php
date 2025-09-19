@@ -15,7 +15,7 @@
 
         <i class="fas fa-user-circle me-3"></i>
 
-        <a href="#" class="text-primary me-3">
+        <a href="{{ route('user.profile') }}" class="text-primary me-3">
             {{ auth()->user()->name }}
         </a>
 
