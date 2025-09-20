@@ -14,9 +14,6 @@ class RhUserController
 {
     public function index()
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // $colaborators = User::where('role', 'rh')->get();
         $colaborators = User::withTrashed()
                         ->with('detail')
@@ -28,9 +25,6 @@ class RhUserController
 
     public function newColaborator()
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         //get all departments
         $departments = Department::all();
 
@@ -39,9 +33,6 @@ class RhUserController
 
     public function createColaborator(Request $request)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
@@ -90,9 +81,6 @@ class RhUserController
 
     public function editColaborator($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         $colaborator = User::with('detail')->where('role', 'rh')->findOrFail($id);
 
         return view('colaborators.edit-rh-user', compact('colaborator'));
@@ -100,9 +88,6 @@ class RhUserController
 
     public function updateColaborator(Request $request)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // form validation
         $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -121,9 +106,6 @@ class RhUserController
 
     public function deleteColaborator($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         $colaborator = User::findOrFail($id);
 
         return view('colaborators.delete-rh-user', compact('colaborator'));
@@ -131,9 +113,6 @@ class RhUserController
 
     public function deleteColaboratorConfirm($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         $colaborator = User::findOrFail($id);
         $colaborator->delete();
 
@@ -142,9 +121,6 @@ class RhUserController
 
     public function restoreRhColaborator($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // get user removed with softDelete
         $colaborator = User::withTrashed()->where('role', 'rh')->findOrFail($id);
         $colaborator->restore();

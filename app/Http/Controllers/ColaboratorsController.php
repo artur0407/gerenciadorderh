@@ -10,9 +10,6 @@ class ColaboratorsController
 {
     public function index()
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta págiaana');
-
         $colaborators = User::withTrashed()
                         ->with('detail', 'department')
                         ->where('role', '<>', 'admin')
@@ -23,8 +20,6 @@ class ColaboratorsController
 
     public function showDetails($id)
     {
-        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // check if id is the same as the auth user
         if (Auth::user()->id === $id) {
             return redirect()->route('home');
@@ -44,9 +39,6 @@ class ColaboratorsController
 
     public function deleteColaborator($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // check if id is the same as the auth user
         if (Auth::user()->id === $id) {
             return redirect()->route('home');
@@ -59,9 +51,6 @@ class ColaboratorsController
 
     public function deleteColaboratorConfirm($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // check if id is the same as the auth user
         if (Auth::user()->id === $id) {
             return redirect()->route('home');
@@ -75,9 +64,6 @@ class ColaboratorsController
 
     public function restoreColaborator($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin', 'rh') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // get user removed with softDelete
         $colaborator = User::withTrashed()->findOrFail($id);
         $colaborator->restore();
@@ -87,9 +73,6 @@ class ColaboratorsController
 
     public function home()
     {
-        // se for colaborador não faz nada e o código segue, se não for aborta com a mensagem
-        Auth::user()->can('colaborator') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // get colaborator data
         $colaborator = User::with('detail', 'department')
                         ->where('id', Auth::user()->id)

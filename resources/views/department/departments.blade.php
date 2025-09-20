@@ -2,7 +2,7 @@
     
     <div class="w-100 p-4">
 
-        <h3>Departments</h3>
+        <h3>Departmentos</h3>
 
         <hr>
 
@@ -10,11 +10,11 @@
 
             <div class="text-center my-5">
                 <p>No deparments found</p>
-                <a href="{{ route('departments.new') }}" class="btn btn-primary">Create a new department</a>
+                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departmento</a>
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route('departments.new') }}" class="btn btn-primary">Create a new department</a>
+                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departmento</a>
             </div>
 
             <table class="table w-50" id="table">

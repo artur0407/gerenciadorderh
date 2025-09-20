@@ -12,27 +12,18 @@ class DepartmentController
 {
     public function index()
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-        
         $departments = Department::all();
-
+        
         return view('department.departments', compact('departments'));
     }
 
     public function newDepartment(): View
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         return view('department.add-department');
     }
 
     public function createDepartment(Request $request)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         // form validation
         $request->validate([
             'name' => 'required|string|min:3|max:50|unique:departments'
@@ -47,9 +38,6 @@ class DepartmentController
 
     public function editDepartment($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
@@ -61,9 +49,6 @@ class DepartmentController
 
     public function updateDepartment(Request $request)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         $id = $request->id;
 
         if ($this->isDepartmentBlocked($id)) {
@@ -87,9 +72,6 @@ class DepartmentController
 
     public function deleteDepartment($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
@@ -101,9 +83,6 @@ class DepartmentController
 
     public function deleteDepartmentConfirm($id)
     {
-        // se for admin não faz nada e o código segue, se não for admin aborta com a mensagem
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem autorização para acessar esta página');
-
         if ($this->isDepartmentBlocked($id)) {
             return redirect()->route('departments');
         }
