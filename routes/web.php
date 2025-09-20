@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     }
   })->name('home');
 
+  // admin routes
+  Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
+
   // user profile page
   Route::get('/user/profile', [ProfileController::class, 'index'])->name('user.profile');
   Route::post('/user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.profile.update-password');
@@ -43,9 +46,6 @@ Route::middleware('auth')->group(function () {
   Route::post('/departments/update-department', [DepartmentController::class, 'updateDepartment'])->name('departments.update');
   Route::get('/departments/delete-department/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
   Route::get('/departments/delete-department-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-confirm');
-
-  // admin routes
-  Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
 
   // admin colaborators
   Route::get('/rh-users', [RhUserController::class, 'index'])->name('colaborators.rh');
