@@ -9,9 +9,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class RhUserController
 {
+    protected function rules($userId = null): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'select_department' => 'required|exists:departments,id',
+            'address' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:10',
+            'city' => 'required|string|max:50',
+            'phone' => 'required|string|max:50',
+            'salary' => 'required|decimal:2',
+            'admission_date' => 'required|date_format:Y-m-d',
+        ];
+    }
+
     public function index()
     {
         // $colaborators = User::where('role', 'rh')->get();
@@ -33,17 +54,7 @@ class RhUserController
 
     public function createColaborator(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'select_department' => 'required|exists:departments,id',
-            'address' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:10',
-            'city' => 'required|string|max:50',
-            'phone' => 'required|string|max:50',
-            'salary' => 'required|decimal:2',
-            'admission_date' => 'required|date_format:Y-m-d'
-        ]);
+        $request->validate($this->rules());
 
         // check if department d === 2
         if ($request->select_department != 2) {
@@ -82,24 +93,30 @@ class RhUserController
     public function editColaborator($id)
     {
         $colaborator = User::with('detail')->where('role', 'rh')->findOrFail($id);
+        $departments = Department::where('id', 2)->get();
 
-        return view('colaborators.edit-rh-user', compact('colaborator'));
+        return view('colaborators.edit-rh-user', compact('colaborator', 'departments'));
     }
 
     public function updateColaborator(Request $request)
     {
+        $user = User::with('detail')->findOrFail($request->user_id);
+        
         // form validation
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'salary' => 'required|decimal:2',
-            'admission_date' => 'required|date_format:Y-m-d'
-        ]);
+        $request->validate($this->rules($user->id));
 
-        $user = User::findOrFail($request->user_id);
-        $user->detail->update([
-            'salary' => $request->salary,
-            'admission_date' => $request->admission_date
-        ]);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->detail->address = $request->address;
+        $user->detail->zip_code = $request->zip_code;
+        $user->detail->city = $request->city;
+        $user->detail->phone = $request->phone;
+        $user->detail->salary = $request->salary;
+        $user->detail->admission_date = $request->admission_date;
+        $user->department_id = $request->select_department;
+
+        $user->save();
+        $user->detail->save();
 
         return redirect()->route('colaborators.rh')->with('success', 'Colaborador alterado com sucesso!');
     }
@@ -119,12 +136,19 @@ class RhUserController
         return redirect()->route('colaborators.rh')->with('success', 'Colaborador deletado com sucesso!');
     }
 
-    public function restoreRhColaborator($id)
+    public function restoreColaborator($id)
     {
         // get user removed with softDelete
         $colaborator = User::withTrashed()->where('role', 'rh')->findOrFail($id);
         $colaborator->restore();
 
         return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
+    }
+
+    public function showDetails($id)
+    {
+        $colaborator = User::with('detail', 'department')->findOrFail($id);
+
+        return view('colaborators.show-details', compact('colaborator'));
     }
 }
