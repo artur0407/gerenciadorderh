@@ -2,12 +2,14 @@
     
     <a href="{{ route('home') }}"><i class="fas fa-home me-3"></i>Home</a>
 
+    @canany(['admin', 'rh'])
+        <a href="{{ route('rh.management.home') }}" class=""><i class="fas fa-users me-3"></i>Colaboradores</a>
+    @endcan
+
     @can('admin')
-        <a href="{{ route('colaborators') }}" class=""><i class="fas fa-users me-3"></i>Colaboradores</a>
         <a href="{{ route('colaborators.rh') }}" class=""><i class="fas fa-user-gear me-3"></i>Colaboradores RH</a>
         <a href="{{ route('departments') }}" class=""><i class="fas fa-industry me-3"></i>Departamentos</a>
     @endcan
-
     <hr>
 
     <a href="{{ route('user.profile') }}" class=""><i class="fas fa-cog me-3"></i>Perfil Usuário</a>

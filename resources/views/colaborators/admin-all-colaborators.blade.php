@@ -1,16 +1,18 @@
 <x-layout-app page-title="Colaboradores">
-
     <div class="w-100 p-4">
-
-        <h3>Todos os colaboradores</h3>
-
+        <h3>Listagem de Colaboradores</h3>
         <hr>
-
         @if ($colaborators->count() === 0)
             <div class="text-center my-5">
                 <p>Nenhum colaborador encontrado</p>
             </div>
+            <div class="mb-3">
+                <a href="{{ route('rh.management.new') }}" class="btn btn-primary">Criar novo colaborador</a>
+            </div>
         @else
+            <div class="mb-3">
+                <a href="{{ route('rh.management.new') }}" class="btn btn-primary">Criar novo colaborador</a>
+            </div>
             <table class="table" id="table">
                 <thead class="table-dark">
                     <th>Nome</th>
@@ -24,23 +26,23 @@
                 </thead>
                 <tbody>
                     @foreach ($colaborators as $colaborator)
-                        <tr>
-                            <td>{{ $colaborator->name }}</td>
-                            <td>{{ $colaborator->email }}</td>
-                            <td>
-                                @empty($colaborator->email_verified_at)
-                                    <span class="badge bg-danger">No</span>
-                                @else
-                                    <span class="badge bg-success">Yes</span>
-                        @endif
+                    <tr>
+                        <td>{{ $colaborator->name }}</td>
+                        <td>{{ $colaborator->email }}</td>
+                        <td>
+                            @empty($colaborator->email_verified_at)
+                                <span class="badge bg-danger">No</span>
+                            @else
+                                <span class="badge bg-success">Yes</span>
+                            @endif
                         </td>
-                        <td>{{ $colaborator->department->name ?? "Sem departamento" }}</td>
+                        <td>{{ $colaborator->department->name ?? 'Sem departamento' }}</td>
                         <td>{{ $colaborator->name }}</td>
                         <td>{{ $colaborator->detail->admission_date }}</td>
                         <td>{{ $colaborator->detail->salary }}</td>
                         <td>
                             <div class="d-flex gap-3 justify-content-end">
-                               
+
                                 @if (empty($colaborator->deleted_at))
                                     <a href="{{ route('colaborators.details', ['id' => $colaborator->id]) }}"
                                         class="btn btn-sm btn-outline-dark">
@@ -59,14 +61,12 @@
                                         Restore
                                     </a>
                                 @endif
-
                             </div>
                         </td>
-                        </tr>
-            @endforeach
-            </tbody>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
-            @endif
-        </div>
-        <!-- table -->
-    </x-layout-app>
+        @endif
+    </div>
+</x-layout-app>
