@@ -41,15 +41,15 @@ class RhUserController
                         ->where('role', 'rh')
                         ->get();
 
-        return view('colaborators.rh-users', compact('colaborators'));
+        return view('users.rh', compact('colaborators'));
     }
 
     public function newColaborator()
     {
         //get all departments
-        $departments = Department::all();
+        $departments = Department::where('id',2)->get();
 
-        return view('colaborators.add-rh-user', compact('departments'));
+        return view('users.rh-new', compact('departments'));
     }
 
     public function createColaborator(Request $request)
@@ -87,7 +87,7 @@ class RhUserController
         // send email to user
         Mail::to($user->email)->send(new ConfirmAccountEmail(route('confirm-account', $token)));
 
-        return redirect()->route('colaborators.rh')->with('success', 'Colaborador criado com sucesso!');
+        return redirect()->route('users.rh')->with('success', 'Colaborador criado com sucesso!');
     }
 
     public function editColaborator($id)
@@ -95,7 +95,7 @@ class RhUserController
         $colaborator = User::with('detail')->where('role', 'rh')->findOrFail($id);
         $departments = Department::where('id', 2)->get();
 
-        return view('colaborators.edit-rh-user', compact('colaborator', 'departments'));
+        return view('users.rh-edit', compact('colaborator', 'departments'));
     }
 
     public function updateColaborator(Request $request)
@@ -118,14 +118,14 @@ class RhUserController
         $user->save();
         $user->detail->save();
 
-        return redirect()->route('colaborators.rh')->with('success', 'Colaborador alterado com sucesso!');
+        return redirect()->route('users.rh')->with('success', 'Colaborador alterado com sucesso!');
     }
 
     public function deleteColaborator($id)
     {
         $colaborator = User::findOrFail($id);
 
-        return view('colaborators.delete-rh-user', compact('colaborator'));
+        return view('users.rh-delete', compact('colaborator'));
     }
 
     public function deleteColaboratorConfirm($id)
@@ -133,7 +133,7 @@ class RhUserController
         $colaborator = User::findOrFail($id);
         $colaborator->delete();
 
-        return redirect()->route('colaborators.rh')->with('success', 'Colaborador deletado com sucesso!');
+        return redirect()->route('users.rh')->with('success', 'Colaborador deletado com sucesso!');
     }
 
     public function restoreColaborator($id)
@@ -142,13 +142,13 @@ class RhUserController
         $colaborator = User::withTrashed()->where('role', 'rh')->findOrFail($id);
         $colaborator->restore();
 
-        return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
+        return redirect()->route('users.rh')->with('success', 'Colaborador restaurado com sucesso');
     }
 
     public function showDetails($id)
     {
         $colaborator = User::with('detail', 'department')->findOrFail($id);
 
-        return view('colaborators.show-details', compact('colaborator'));
+        return view('users.show-details', compact('colaborator'));
     }
 }

@@ -15,7 +15,7 @@ class ColaboratorsController
                         ->whereNotIn('role', ['admin', 'rh'])
                         ->get();
         
-        return view('colaborators.admin-all-colaborators')->with('colaborators', $colaborators);
+        return view('users.admin-all-colaborators')->with('colaborators', $colaborators);
     }
 
     public function showDetails($id)
@@ -34,7 +34,7 @@ class ColaboratorsController
             abort(404);
         }
         
-        return view('colaborators.show-details')->with('colaborator', $colaborator);
+        return view('users.show-details')->with('colaborator', $colaborator);
     }
 
     public function deleteColaborator($id)
@@ -59,7 +59,7 @@ class ColaboratorsController
         $colaborator = User::findOrFail($id);
         $colaborator->delete();
 
-        return redirect()->route('colaborators')->with('success', 'Colaborador deletado com sucesso!');
+        return redirect()->route('users')->with('success', 'Colaborador deletado com sucesso!');
     }
 
     public function restoreColaborator($id)
@@ -68,7 +68,7 @@ class ColaboratorsController
         $colaborator = User::withTrashed()->findOrFail($id);
         $colaborator->restore();
 
-        return redirect()->route('colaborators.rh')->with('success', 'Colaborador restaurado com sucesso');
+        return redirect()->route('users.rh')->with('success', 'Colaborador restaurado com sucesso');
     }
 
     public function home()
@@ -78,6 +78,6 @@ class ColaboratorsController
                         ->where('id', Auth::user()->id)
                         ->first();
 
-        return view('colaborators.show-details', compact('colaborator'));
+        return view('users.show-details', compact('colaborator'));
     }
 }

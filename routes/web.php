@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     if (auth()->user()->role === 'admin') {
       return redirect()->route('admin.home');
     } else if (auth()->user()->role === 'rh') {
-      return redirect()->route('rh.management.home');
+      return redirect()->route('users.colaborators');
     } else {
       return redirect()->route('colaborator.home');
     }
@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users-rh/delete-confirm/{id}', [RhUserController::class, 'deleteColaboratorConfirm'])->name('users.rh.delete-confirm');
     Route::get('/users-rh/restore/{id}', [RhUserController::class, 'restoreColaborator'])->name('users.rh.restore');
     Route::get('/users-rh/details/{id}', [RhUserController::class, 'showDetails'])->name('users.rh.details');
+  
   });
 
   Route::middleware([AdminOrRH::class])->group(function () {
@@ -72,10 +73,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/users-colaborators/create', [RhManagementController::class, 'createColaborator'])->name('users.colaborators.create');
     Route::get('/users-colaborators/edit/{id}', [RhManagementController::class, 'editColaborator'])->name('users.colaborators.edit');
     Route::post('/users-colaborators/update', [RhManagementController::class, 'updateColaborator'])->name('users.colaborators.update');
-    Route::get('/users-colaborators/details/{id}', [RhManagementController::class, 'showDetails'])->name('users.colaborators.details');
     Route::get('/users-colaborators/delete/{id}', [RhManagementController::class, 'deleteColaborator'])->name('users.colaborators.delete');
     Route::get('/users-colaborators/delete-confirm/{id}', [RhManagementController::class, 'deleteColaboratorConfirm'])->name('users.colaborators.delete-confirm');
     Route::get('/users-colaborators/restore/{id}', [RhManagementController::class, 'restoreColaborator'])->name('users.colaborators.restore');
+    Route::get('/users-colaborators/details/{id}', [RhManagementController::class, 'showDetails'])->name('users.colaborators.details');
     
     // admin colaborators
     // Route::get('/colaborators', [ColaboratorsController::class, 'index'])->name('colaborators');

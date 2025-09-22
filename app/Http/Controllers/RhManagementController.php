@@ -41,7 +41,7 @@ class RhManagementController
                         ->withTrashed()
                         ->get();
         
-        return view('colaborators.colaborators', compact('colaborators'));
+        return view('users.colaborators', compact('colaborators'));
     }
 
     public function newColaborator()
@@ -52,7 +52,7 @@ class RhManagementController
         if ($departments->count() === 0)
             abort(403, 'Não há departamentos para adicionar colaboradores. Contate o administrador do sistema');
 
-        return view('colaborators.add-colaborator', compact('departments'));
+        return view('users.colaborator-new', compact('departments'));
     }
 
     public function createColaborator(Request $request)
@@ -98,7 +98,7 @@ class RhManagementController
         $colaborator = User::with('detail')->findOrFail($id);
         $departments = Department::where('id', '>', 2)->get();
 
-        return view('colaborators.edit-colaborator', compact('colaborator', 'departments'));
+        return view('users.colaborator-edit', compact('colaborator', 'departments'));
     }
 
     public function updateColaborator(Request $request)
@@ -133,14 +133,14 @@ class RhManagementController
     {
         $colaborator = User::with('detail', 'department')->findOrFail($id);
 
-        return view('colaborators.show-details', compact('colaborator'));
+        return view('users.show-details', compact('colaborator'));
     }
 
     public function deleteColaborator($id)
     {
         $colaborator = User::findOrFail($id);
 
-        return view('colaborators.delete-colaborator', compact('colaborator'));
+        return view('users.colaborator-delete', compact('colaborator'));
     }
 
     public function deleteColaboratorConfirm($id)
@@ -148,7 +148,7 @@ class RhManagementController
         $colaborator = User::findOrFail($id);
         $colaborator->delete();
 
-        return redirect()->route('rh.management.home')->with('success', 'Colaborador alterado com sucesso!');
+        return redirect()->route('users.colaborators')->with('success', 'Colaborador alterado com sucesso!');
     }
 
     public function restoreColaborator($id)
@@ -156,6 +156,6 @@ class RhManagementController
         $colaborator = User::withTrashed()->findOrFail($id);
         $colaborator->restore();
 
-        return redirect()->route('rh.management.home')->with('success', 'Colaborador restaurado com sucesso!');
+        return redirect()->route('users.colaborators')->with('success', 'Colaborador restaurado com sucesso!');
     }
 }
