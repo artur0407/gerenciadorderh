@@ -23,10 +23,10 @@ class AdminController
         $data['total_salary'] = User::withoutTrashed()
             ->with('detail')
             ->get()->sum(function ($colaborator) {
-                return $colaborator->detail->salary;
+                return $colaborator->detail->salary_numeric;
             });
             
-        $data['total_salary'] = number_format($data['total_salary'], 2, ',' , '.'). ' $';
+        $data['total_salary'] = 'R$ ' . number_format($data['total_salary'], 2, ',' , '.');
 
         // total colaborators by department
         $data['total_colaborators_per_department'] = User::withoutTrashed()
@@ -48,7 +48,7 @@ class AdminController
                 return [
                     'department' => $department->first()->department->name ?? '_',
                     'total' => $department->sum(function($colaborator) {
-                        return $colaborator->detail->salary;
+                        return $colaborator->detail->salary_numeric;
                     })
                 ];
             });
@@ -57,7 +57,7 @@ class AdminController
         $data['total_salary_by_department'] = $data['total_salary_by_department']->map(function($department) {
             return [
                 'department' => $department['department'],
-                'total' => number_format($department['total'], 2, ',' , '.'). ' $'
+                'total' => 'R$ ' . number_format($department['total'], 2, ',' , '.')
             ];
         });
 

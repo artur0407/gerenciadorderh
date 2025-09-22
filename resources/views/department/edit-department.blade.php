@@ -2,7 +2,7 @@
 
     <div class="w-25 p-4">
 
-        <h3>Editar departmento</h3>
+        <h3>Editar departamento</h3>
 
         <hr>
 

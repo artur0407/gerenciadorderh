@@ -41,8 +41,8 @@
                     <p>CEP: <strong>{{ $colaborator->detail->zip_code }}</strong></p>
                     <p>Cidade: <strong>{{ $colaborator->detail->city }}</strong></p>
                     <p>Telefone: <strong>{{ $colaborator->detail->phone }}</strong></p>
-                    <p>Admission date: <strong>{{ $colaborator->detail->admission_date }}</strong></p>
-                    <p>Salário: <strong>{{ $colaborator->detail->salary }}</strong></p>
+                    <p>Admission date: <strong>{{ $colaborator->detail->admission_date->format('d/m/Y') }}</strong></p>
+                    <p>Salário: <strong>{{ "R$ " . $colaborator->detail->salary }}</strong></p>
                 </div>
             </div>
         </div>

@@ -25,11 +25,11 @@ class RhController
             ],
             'select_department' => 'required|exists:departments,id',
             'address' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:10',
+            'zip_code' => 'required|string|max:10|regex:/^\d{5}-\d{3}$/',
             'city' => 'required|string|max:50',
-            'phone' => 'required|string|max:50',
-            'salary' => 'required|decimal:2',
-            'admission_date' => 'required|date_format:Y-m-d',
+            'phone' => 'required|string|max:50|regex:/^\(\d{2}\)\s\d{5}-\d{4}$/',
+            'salary' => 'required|regex:/^\d{1,3}(\.\d{3})*,\d{2}$/',
+            'admission_date' => 'required|date_format:d/m/Y',
         ];
     }
 

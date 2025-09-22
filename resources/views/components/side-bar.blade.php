@@ -20,7 +20,7 @@
     <div class="text-center mt-3">
         <form action="{{ route('logout') }}" method="post">
             @csrf
-            <button type="sunmit" class="btn btn-sm btn-outline-dark">
+            <button type="submit" class="btn btn-sm btn-outline-dark">
                 <i class="fas fa-sign-out-alt me-3"></i>Logout
             </button>
         </form>

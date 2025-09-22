@@ -62,9 +62,9 @@ class ProfileController
         // form validation
         $request->validate([
             'address' => 'required|min:3|max:100',
-            'zip_code' => 'required|min:3|max:8',
+            'zip_code' => 'required|string|max:10|regex:/^\d{5}-\d{3}$/',
             'city' => 'required|min:3|max:50',
-            'phone' => 'required|min:6|max:20'
+            'phone' => 'required|string|max:50|regex:/^\(\d{2}\)\s\d{5}-\d{4}$/',
         ]);
 
         // get user detail

@@ -22,11 +22,11 @@
         <div class="d-flex">
             <div class="flex-grow-1 pe-3">
                 <label for="select_department">Departamento</label>
-                <select class="form-select" id="select_department" name="select_department">
+                <select class="form-select p-2" id="select_department" name="select_department">
                     <option value="0">Selecione</option>
                     @foreach ($departments as $department)
                         <option 
-                            @selected($colaborator->department->id ===  $department->id) 
+                            @selected($colaborator?->department->id ===  $department->id) 
                             value="{{ $department->id }}">
                             {{ $department->name }}
                         </option>

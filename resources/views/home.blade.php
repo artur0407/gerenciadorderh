@@ -10,8 +10,8 @@
         </div>
         <hr/>
         <div class="d-flex">
-            <x-info-title-collection item-title="Número de colaboradores por departmento" :collection="$data['total_colaborators_per_department']" />
-            <x-info-title-collection item-title="Total em salário por departmento" :collection="$data['total_salary_by_department']" />
+            <x-info-title-collection item-title="Número de colaboradores por departamento" :collection="$data['total_colaborators_per_department']" />
+            <x-info-title-collection item-title="Total em salário por departamento" :collection="$data['total_salary_by_department']" />
         </div>
     </div>
 

@@ -28,8 +28,8 @@ class ColaboratorsController
             'zip_code' => 'required|string|max:10',
             'city' => 'required|string|max:50',
             'phone' => 'required|string|max:50',
-            'salary' => 'required|decimal:2',
-            'admission_date' => 'required|date_format:Y-m-d',
+            'salary' => 'required|regex:/^\d{1,3}(\.\d{3})*,\d{2}$/',
+            'admission_date' => 'required|date_format:d/m/Y',
         ];
     }
 

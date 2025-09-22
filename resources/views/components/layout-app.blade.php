@@ -31,6 +31,9 @@
     <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>
 
+    {{-- additionals scripts pages --}}
+    @stack('scripts')
+
 </body>
 
 </html>

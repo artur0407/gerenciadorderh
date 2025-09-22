@@ -1,8 +1,8 @@
-<x-layout-app page-title="Departmentos">
+<x-layout-app page-title="Departamentos">
     
     <div class="w-100 p-4">
 
-        <h3>Departmentos</h3>
+        <h3>Departamentos</h3>
 
         <hr>
 
@@ -10,16 +10,16 @@
 
             <div class="text-center my-5">
                 <p>Nenhum departamento encontrado</p>
-                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departmento</a>
+                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departamento</a>
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departmento</a>
+                <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departamento</a>
             </div>
 
             <table class="table w-50" id="table">
                 <thead class="table-dark">
-                    <th>Departmentos</th>
+                    <th>Departamentos</th>
                     <th></th>
                 </thead>
                 <tbody>
