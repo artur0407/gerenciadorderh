@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
     {
         // admin
         DB::table('users')->insert([
-            'department_id' => 1,   // Administração
+            'department_id' => 1, 
             'name' => 'Administrador',
             'email' => 'admin@rhmangnt.com',
             'email_verified_at' => now(),
@@ -28,9 +28,9 @@ class AdminSeeder extends Seeder
         DB::table('user_details')->insert([
             'user_id' => 1,
             'address' => 'Rua do Administrador, 123',
-            'zip_code' => '1234-123',
+            'zip_code' => '87075-780',
             'city' => 'Lisboa',
-            'phone' => '900000001',
+            'phone' => '(44) 98822-2264',
             'salary' => 8000.00,
             'admission_date' => '2020-01-01',
             'created_at' => now(),

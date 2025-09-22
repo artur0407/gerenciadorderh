@@ -47,8 +47,14 @@
             </div>
         </div>
 
-        <button class="btn btn-outline-dark" onclick="window.history.back()">
-            <i class="fas fa-arrow-left me-2"></i>Voltar</button>
+        @php
+            $previousUrl = url()->previous();
+            $backUrl = Str::contains($previousUrl, route('login')) ? route('user.profile') : $previousUrl;
+            $backText = Str::contains($previousUrl, route('login')) ? 'Perfil' : 'Voltar';
+        @endphp
+
+        <a href="{{ $backUrl }}" class="btn btn-outline-dark">
+            <i class="fas fa-arrow-left me-2"></i>{{ $backText }}</a>
 
     </div>
 
