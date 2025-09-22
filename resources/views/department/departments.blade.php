@@ -9,7 +9,7 @@
         @if ($departments->count() === 0)
 
             <div class="text-center my-5">
-                <p>No deparments found</p>
+                <p>Nenhum departamento encontrado</p>
                 <a href="{{ route('departments.new') }}" class="btn btn-primary">Criar novo departmento</a>
             </div>
         @else
@@ -34,12 +34,12 @@
                                         <a href="{{ route('departments.edit', ['id' => $department->id]) }}" 
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fa-regular fa-pen-to-square me-2"></i>
-                                            Edit
+                                            Editar
                                         </a>
                                         <a href="{{ route('departments.delete', ['id' => $department->id]) }}" 
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fa-regular fa-trash-can me-2"></i>
-                                            Delete
+                                            Deletar
                                         </a>
                                     @endif
                                 </div>

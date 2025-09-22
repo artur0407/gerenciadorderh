@@ -6,7 +6,7 @@
 
         <hr>
 
-        <form action="{{ route('rh.management.create') }}" method="post">
+        <form action="{{ route('users.colaborators.create') }}" method="post">
 
             @csrf
 
@@ -16,7 +16,7 @@
                     <x-colaborator-detail :colaborator="$colaborator ?? null" />
                 </div>
                 <div class="mt-3">
-                    <a href="{{ route('rh.management.home') }}" class="btn btn-outline-danger me-3">Cancelar</a>
+                    <a href="{{ route('users.colaborators') }}" class="btn btn-outline-danger me-3">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Criar colaborador</button>
                 </div>
             </div>

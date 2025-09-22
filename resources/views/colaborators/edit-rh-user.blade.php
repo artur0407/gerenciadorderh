@@ -6,7 +6,7 @@
 
         <hr>
 
-        <form action="{{ route('colaborators.rh-update') }}" method="post">
+        <form action="{{ route('users.rh.update') }}" method="post">
 
             @csrf
 
@@ -25,7 +25,7 @@
                     <x-colaborator-detail :colaborator="$colaborator" />
                 </div>
                 <div class="mt-3">
-                    <a href="{{ route('colaborators.rh') }}" class="btn btn-outline-danger me-3">Cancelar</a>
+                    <a href="{{ route('users.rh') }}" class="btn btn-outline-danger me-3">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Atualizar</button>
                 </div>
             </div>

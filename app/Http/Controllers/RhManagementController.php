@@ -33,7 +33,7 @@ class RhManagementController
         ];
     }
 
-    public function home()
+    public function index()
     {
         // get all colaborators that are not role admin and rh
         $colaborators = User::with('detail', 'department')

@@ -12,7 +12,7 @@ class ColaboratorsController
     {
         $colaborators = User::withTrashed()
                         ->with('detail', 'department')
-                        ->where('role', '<>', 'admin')
+                        ->whereNotIn('role', ['admin', 'rh'])
                         ->get();
         
         return view('colaborators.admin-all-colaborators')->with('colaborators', $colaborators);

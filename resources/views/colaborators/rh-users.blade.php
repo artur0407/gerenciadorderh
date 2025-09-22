@@ -10,11 +10,11 @@
 
             <div class="text-center my-5">
                 <p>Nenhum colaborador encontrado</p>
-                <a href="{{ route('colaborators.rh-new') }}" class="btn btn-primary">Criar novo colaborador RH</a>
+                <a href="{{ route('users.rh.new') }}" class="btn btn-primary">Criar novo colaborador RH</a>
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route('colaborators.rh-new') }}" class="btn btn-primary">Criar novo colaborador RH</a>
+                <a href="{{ route('users.rh.new') }}" class="btn btn-primary">Criar novo colaborador RH</a>
             </div>
 
             <table class="table" id="table">
@@ -47,23 +47,23 @@
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
                                     @if (empty($colaborator->deleted_at))
-                                        <a href="{{ route('colaborators.rh-details', ['id' => $colaborator->id]) }}"
+                                        <a href="{{ route('users.rh.details', ['id' => $colaborator->id]) }}"
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fas fa-eye me-2"></i>
                                             Detalhes
                                         </a>
-                                        <a href="{{ route('colaborators.rh-edit', ['id' => $colaborator->id]) }}"
+                                        <a href="{{ route('users.rh.edit', ['id' => $colaborator->id]) }}"
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fa-regular fa-pen-to-square me-2"></i>
                                             Editar
                                         </a>
-                                        <a href="{{ route('colaborators.rh-delete', ['id' => $colaborator->id]) }}"
+                                        <a href="{{ route('users.rh.delete', ['id' => $colaborator->id]) }}"
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fa-regular fa-trash-can me-2"></i>
                                             Deletar
                                         </a>
                                     @else
-                                        <a href="{{ route('colaborators.rh-restore', ['id' => $colaborator->id]) }}"
+                                        <a href="{{ route('users.rh.restore', ['id' => $colaborator->id]) }}"
                                             class="btn btn-sm btn-outline-dark">
                                             <i class="fa-solid fa-trash-arrow-up me-2"></i>
                                             Restaurar

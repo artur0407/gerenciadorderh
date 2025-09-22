@@ -23,7 +23,6 @@ Route::middleware('auth')->group(function () {
 
   Route::redirect('/', 'home');
   Route::get('/home', function () {
-    // check if user is admin
     if (auth()->user()->role === 'admin') {
       return redirect()->route('admin.home');
     } else if (auth()->user()->role === 'rh') {
@@ -46,48 +45,50 @@ Route::middleware('auth')->group(function () {
 
     // department route
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments');
-    Route::get('/departments/new-department', [DepartmentController::class, 'newDepartment'])->name('departments.new');
-    Route::post('/departments/create-department', [DepartmentController::class, 'createDepartment'])->name('departments.create');
-    Route::get('/departments/edit-department/{id}', [DepartmentController::class, 'editDepartment'])->name('departments.edit');
-    Route::post('/departments/update-department', [DepartmentController::class, 'updateDepartment'])->name('departments.update');
-    Route::get('/departments/delete-department/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
-    Route::get('/departments/delete-department-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-confirm');
+    Route::get('/departments/new', [DepartmentController::class, 'newDepartment'])->name('departments.new');
+    Route::post('/departments/create', [DepartmentController::class, 'createDepartment'])->name('departments.create');
+    Route::get('/departments/edit/{id}', [DepartmentController::class, 'editDepartment'])->name('departments.edit');
+    Route::post('/departments/update', [DepartmentController::class, 'updateDepartment'])->name('departments.update');
+    Route::get('/departments/delete/{id}', [DepartmentController::class, 'deleteDepartment'])->name('departments.delete');
+    Route::get('/departments/delete-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-confirm');
 
-    // admin colaborators
-    Route::get('/rh-users', [RhUserController::class, 'index'])->name('colaborators.rh');
-    Route::get('/rh-users/new-colaborator', [RhUserController::class, 'newColaborator'])->name('colaborators.rh-new');
-    Route::post('/rh-users/create-colaborator', [RhUserController::class, 'createColaborator'])->name('colaborators.rh-create');
-    Route::get('/rh-users/edit-colaborator/{id}', [RhUserController::class, 'editColaborator'])->name('colaborators.rh-edit');
-    Route::post('/rh-users/update-colaborator', [RhUserController::class, 'updateColaborator'])->name('colaborators.rh-update');
-    Route::get('/rh-users/delete-colaborator/{id}', [RhUserController::class, 'deleteColaborator'])->name('colaborators.rh-delete');
-    Route::get('/rh-users/delete-colaborator-confirm/{id}', [RhUserController::class, 'deleteColaboratorConfirm'])->name('colaborators.rh-delete-confirm');
-    Route::get('/rh-users/restore/{id}', [RhUserController::class, 'restoreRhColaborator'])->name('colaborators.rh-restore');
+    // colaborators rh
+    Route::get('/users-rh', [RhUserController::class, 'index'])->name('users.rh');
+    Route::get('/users-rh/new', [RhUserController::class, 'newColaborator'])->name('users.rh.new');
+    Route::post('/users-rh/create', [RhUserController::class, 'createColaborator'])->name('users.rh.create');
+    Route::get('/users-rh/edit/{id}', [RhUserController::class, 'editColaborator'])->name('users.rh.edit');
+    Route::post('/users-rh/update', [RhUserController::class, 'updateColaborator'])->name('users.rh.update');
+    Route::get('/users-rh/delete/{id}', [RhUserController::class, 'deleteColaborator'])->name('users.rh.delete');
+    Route::get('/users-rh/delete-confirm/{id}', [RhUserController::class, 'deleteColaboratorConfirm'])->name('users.rh.delete-confirm');
+    Route::get('/users-rh/restore/{id}', [RhUserController::class, 'restoreColaborator'])->name('users.rh.restore');
+    Route::get('/users-rh/details/{id}', [RhUserController::class, 'showDetails'])->name('users.rh.details');
   });
 
   Route::middleware([AdminOrRH::class])->group(function () {
+    
+    // colaborators other departments
+    Route::get('/users-colaborators', [RhManagementController::class, 'index'])->name('users.colaborators');
+    Route::get('/users-colaborators/new', [RhManagementController::class, 'newColaborator'])->name('users.colaborators.new');
+    Route::post('/users-colaborators/create', [RhManagementController::class, 'createColaborator'])->name('users.colaborators.create');
+    Route::get('/users-colaborators/edit/{id}', [RhManagementController::class, 'editColaborator'])->name('users.colaborators.edit');
+    Route::post('/users-colaborators/update', [RhManagementController::class, 'updateColaborator'])->name('users.colaborators.update');
+    Route::get('/users-colaborators/details/{id}', [RhManagementController::class, 'showDetails'])->name('users.colaborators.details');
+    Route::get('/users-colaborators/delete/{id}', [RhManagementController::class, 'deleteColaborator'])->name('users.colaborators.delete');
+    Route::get('/users-colaborators/delete-confirm/{id}', [RhManagementController::class, 'deleteColaboratorConfirm'])->name('users.colaborators.delete-confirm');
+    Route::get('/users-colaborators/restore/{id}', [RhManagementController::class, 'restoreColaborator'])->name('users.colaborators.restore');
+    
     // admin colaborators
-    Route::get('/colaborators', [ColaboratorsController::class, 'index'])->name('colaborators');
-    Route::get('/colaborators/details/{id}', [ColaboratorsController::class, 'showDetails'])->name('colaborators.details');
-    Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('colaborators.delete');
-    Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-confirm');
-    Route::get('/colaborators/restore/{id}', [ColaboratorsController::class, 'restoreColaborator'])->name('colaborators.restore');
+    // Route::get('/colaborators', [ColaboratorsController::class, 'index'])->name('colaborators');
+    // Route::get('/colaborators/details/{id}', [ColaboratorsController::class, 'showDetails'])->name('colaborators.details');
+    // Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('colaborators.delete');
+    // Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-confirm');
+    // Route::get('/colaborators/restore/{id}', [ColaboratorsController::class, 'restoreColaborator'])->name('colaborators.restore');
   });
 
+  // dash colaborator
   Route::middleware([Colaborator::class])->group(function () {
-    // dash colaborator
     Route::get('/colaborator/home', [ColaboratorsController::class, 'home'])->name('colaborator.home');
   });
 
-  Route::middleware([RH::class])->group(function () {
-    // rh colaborators
-    Route::get('/rh-users/management/home', [RhManagementController::class, 'home'])->name('rh.management.home');
-    Route::get('/rh-users/management/new-colaborator', [RhManagementController::class, 'newColaborator'])->name('rh.management.new');
-    Route::post('/rh-users/management/create-colaborator', [RhManagementController::class, 'createColaborator'])->name('rh.management.create');
-    Route::get('/rh-users/management/edit-colaborator/{id}', [RhManagementController::class, 'editColaborator'])->name('rh.management.edit');
-    Route::post('/rh-users/management/update-colaborator', [RhManagementController::class, 'updateColaborator'])->name('rh.management.update');
-    Route::get('/rh-users/management/details/{id}', [RhManagementController::class, 'showDetails'])->name('rh.management.details');
-    Route::get('/rh-users/management/delete-colaborator/{id}', [RhManagementController::class, 'deleteColaborator'])->name('rh.management.delete');
-    Route::get('/rh-users/management/delete-colaborator-confirm/{id}', [RhManagementController::class, 'deleteColaboratorConfirm'])->name('rh.management.delete-confirm');
-    Route::get('/rh-users/management/restore/{id}', [RhManagementController::class, 'restoreColaborator'])->name('rh.management.restore');
-  });
+  Route::middleware([RH::class])->group(function () {});
 });
