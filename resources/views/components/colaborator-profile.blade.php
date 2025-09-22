@@ -1,4 +1,4 @@
-<div class="col border border-black p-4">
+<div class="col card border p-4">
 
     <div class="mb-3">
         <label for="name" class="form-label">Nome</label>
@@ -21,10 +21,15 @@
     <div class="mb-3">
         <div class="d-flex">
             <div class="flex-grow-1 pe-3">
-                <label for="select_department">Departmento</label>
+                <label for="select_department">Departamento</label>
                 <select class="form-select" id="select_department" name="select_department">
+                    <option value="0">Selecione</option>
                     @foreach ($departments as $department)
-                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        <option 
+                            @selected($colaborator->department->id ===  $department->id) 
+                            value="{{ $department->id }}">
+                            {{ $department->name }}
+                        </option>
                     @endforeach
                 </select>
                 @error('select_department')

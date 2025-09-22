@@ -17,7 +17,7 @@
                 </div>
                 <div class="mt-3">
                     <a href="{{ route('users.colaborators') }}" class="btn btn-outline-danger me-3">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Criar colaborador</button>
+                    <button type="submit" class="btn btn-outline-primary">Criar</button>
                 </div>
             </div>
         </form>

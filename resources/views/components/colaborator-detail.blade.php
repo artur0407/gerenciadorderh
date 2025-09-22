@@ -1,4 +1,4 @@
-<div class="col border border-black p-4">
+<div class="col card border p-4">
     <div class="mb-3">
         <label for="Address" class="form-label">Endereço</label>
         <input type="text" class="form-control" id="address" name="address"
