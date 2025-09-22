@@ -4,9 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ColaboratorsController;
 use App\Http\Controllers\ConfirmAccountController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RhManagementController;
-use App\Http\Controllers\RhUserController;
+use App\Http\Controllers\RhController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\AdminOrRH;
 use App\Http\Middleware\Colaborator;
@@ -22,15 +22,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
   Route::redirect('/', 'home');
-  Route::get('/home', function () {
-    if (auth()->user()->role === 'admin') {
-      return redirect()->route('admin.home');
-    } else if (auth()->user()->role === 'rh') {
-      return redirect()->route('users.colaborators');
-    } else {
-      return redirect()->route('colaborator.home');
-    }
-  })->name('home');
+  Route::get('/home', [HomeController::class, 'index'])->name('home');
 
   // user profile page
   Route::get('/user/profile', [ProfileController::class, 'index'])->name('user.profile');
@@ -41,7 +33,7 @@ Route::middleware('auth')->group(function () {
   Route::middleware([Admin::class])->group(function () {
 
     // dash admin
-    Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
+    Route::get('/users-admin/home', [AdminController::class, 'home'])->name('users.admin.home');
 
     // department route
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments');
@@ -53,43 +45,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/departments/delete-confirm/{id}', [DepartmentController::class, 'deleteDepartmentConfirm'])->name('departments.delete-confirm');
 
     // colaborators rh
-    Route::get('/users-rh', [RhUserController::class, 'index'])->name('users.rh');
-    Route::get('/users-rh/new', [RhUserController::class, 'newColaborator'])->name('users.rh.new');
-    Route::post('/users-rh/create', [RhUserController::class, 'createColaborator'])->name('users.rh.create');
-    Route::get('/users-rh/edit/{id}', [RhUserController::class, 'editColaborator'])->name('users.rh.edit');
-    Route::post('/users-rh/update', [RhUserController::class, 'updateColaborator'])->name('users.rh.update');
-    Route::get('/users-rh/delete/{id}', [RhUserController::class, 'deleteColaborator'])->name('users.rh.delete');
-    Route::get('/users-rh/delete-confirm/{id}', [RhUserController::class, 'deleteColaboratorConfirm'])->name('users.rh.delete-confirm');
-    Route::get('/users-rh/restore/{id}', [RhUserController::class, 'restoreColaborator'])->name('users.rh.restore');
-    Route::get('/users-rh/details/{id}', [RhUserController::class, 'showDetails'])->name('users.rh.details');
+    Route::get('/users-rh', [RhController::class, 'index'])->name('users.rh');
+    Route::get('/users-rh/new', [RhController::class, 'newColaborator'])->name('users.rh.new');
+    Route::post('/users-rh/create', [RhController::class, 'createColaborator'])->name('users.rh.create');
+    Route::get('/users-rh/edit/{id}', [RhController::class, 'editColaborator'])->name('users.rh.edit');
+    Route::post('/users-rh/update', [RhController::class, 'updateColaborator'])->name('users.rh.update');
+    Route::get('/users-rh/delete/{id}', [RhController::class, 'deleteColaborator'])->name('users.rh.delete');
+    Route::get('/users-rh/delete-confirm/{id}', [RhController::class, 'deleteColaboratorConfirm'])->name('users.rh.delete-confirm');
+    Route::get('/users-rh/restore/{id}', [RhController::class, 'restoreColaborator'])->name('users.rh.restore');
+    Route::get('/users-rh/details/{id}', [RhController::class, 'showDetails'])->name('users.rh.details');
   
   });
 
   Route::middleware([AdminOrRH::class])->group(function () {
     
     // colaborators other departments
-    Route::get('/users-colaborators', [RhManagementController::class, 'index'])->name('users.colaborators');
-    Route::get('/users-colaborators/new', [RhManagementController::class, 'newColaborator'])->name('users.colaborators.new');
-    Route::post('/users-colaborators/create', [RhManagementController::class, 'createColaborator'])->name('users.colaborators.create');
-    Route::get('/users-colaborators/edit/{id}', [RhManagementController::class, 'editColaborator'])->name('users.colaborators.edit');
-    Route::post('/users-colaborators/update', [RhManagementController::class, 'updateColaborator'])->name('users.colaborators.update');
-    Route::get('/users-colaborators/delete/{id}', [RhManagementController::class, 'deleteColaborator'])->name('users.colaborators.delete');
-    Route::get('/users-colaborators/delete-confirm/{id}', [RhManagementController::class, 'deleteColaboratorConfirm'])->name('users.colaborators.delete-confirm');
-    Route::get('/users-colaborators/restore/{id}', [RhManagementController::class, 'restoreColaborator'])->name('users.colaborators.restore');
-    Route::get('/users-colaborators/details/{id}', [RhManagementController::class, 'showDetails'])->name('users.colaborators.details');
-    
-    // admin colaborators
-    // Route::get('/colaborators', [ColaboratorsController::class, 'index'])->name('colaborators');
-    // Route::get('/colaborators/details/{id}', [ColaboratorsController::class, 'showDetails'])->name('colaborators.details');
-    // Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('colaborators.delete');
-    // Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-confirm');
-    // Route::get('/colaborators/restore/{id}', [ColaboratorsController::class, 'restoreColaborator'])->name('colaborators.restore');
+    Route::get('/users-colaborators', [ColaboratorsController::class, 'index'])->name('users.colaborators');
+    Route::get('/users-colaborators/new', [ColaboratorsController::class, 'newColaborator'])->name('users.colaborators.new');
+    Route::post('/users-colaborators/create', [ColaboratorsController::class, 'createColaborator'])->name('users.colaborators.create');
+    Route::get('/users-colaborators/edit/{id}', [ColaboratorsController::class, 'editColaborator'])->name('users.colaborators.edit');
+    Route::post('/users-colaborators/update', [ColaboratorsController::class, 'updateColaborator'])->name('users.colaborators.update');
+    Route::get('/users-colaborators/delete/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('users.colaborators.delete');
+    Route::get('/users-colaborators/delete-confirm/{id}', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('users.colaborators.delete-confirm');
+    Route::get('/users-colaborators/restore/{id}', [ColaboratorsController::class, 'restoreColaborator'])->name('users.colaborators.restore');
+    Route::get('/users-colaborators/details/{id}', [ColaboratorsController::class, 'showDetails'])->name('users.colaborators.details');
+  });
+
+  // dash rh
+  Route::middleware([RH::class])->group(function () {
+    Route::get('/users-rh/home', [RhController::class, 'home'])->name('users.rh.home');
   });
 
   // dash colaborator
   Route::middleware([Colaborator::class])->group(function () {
-    Route::get('/colaborator/home', [ColaboratorsController::class, 'home'])->name('colaborator.home');
+    Route::get('/users-colaborators/home', [ColaboratorsController::class, 'home'])->name('users.colaborators.home');
   });
-
-  Route::middleware([RH::class])->group(function () {});
 });

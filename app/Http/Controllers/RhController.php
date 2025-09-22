@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-class RhUserController
+class RhController
 {
     protected function rules($userId = null): array
     {
@@ -31,6 +31,63 @@ class RhUserController
             'salary' => 'required|decimal:2',
             'admission_date' => 'required|date_format:Y-m-d',
         ];
+    }
+
+    public function home()
+    {
+        // collect all information about the organization
+        $data = [];
+
+        // get total number of colaborators (deleted_at is null)
+        $data['total_colaborators'] = User::whereNotIn('role', ['admin', 'rh'])->whereNull('deleted_at')->count();
+
+        // total colaborators deleted
+        $data['total_colaborators_deleted'] = User::whereNotIn('role', ['admin', 'rh'])->onlyTrashed()->count();
+
+        // total salary for all colaborators
+        $data['total_salary'] = User::whereNotIn('role', ['admin', 'rh'])->withoutTrashed()
+            ->with('detail')
+            ->get()->sum(function ($colaborator) {
+                return $colaborator->detail->salary;
+            });
+            
+        $data['total_salary'] = number_format($data['total_salary'], 2, ',' , '.'). ' $';
+
+        // total colaborators by department
+        $data['total_colaborators_per_department'] = User::whereNotIn('role', ['admin', 'rh'])->withoutTrashed()
+            ->with('department')
+            ->get()
+            ->groupBy('department_id')
+            ->map(function ($department) {
+                return [
+                    'department' => $department->first()->department->name ?? '_',
+                    'total' => $department->count()
+                ];
+            });
+
+        $data['total_salary_by_department'] = User::whereNotIn('role', ['admin', 'rh'])->withoutTrashed()
+            ->with('department', 'detail')
+            ->get()
+            ->groupBy('department_id')
+            ->map(function ($department) {
+                return [
+                    'department' => $department->first()->department->name ?? '_',
+                    'total' => $department->sum(function($colaborator) {
+                        return $colaborator->detail->salary;
+                    })
+                ];
+            });
+        
+        // format salary
+        $data['total_salary_by_department'] = $data['total_salary_by_department']->map(function($department) {
+            return [
+                'department' => $department['department'],
+                'total' => number_format($department['total'], 2, ',' , '.'). ' $'
+            ];
+        });
+
+        // display admin home page
+        return view('home', compact('data'));
     }
 
     public function index()

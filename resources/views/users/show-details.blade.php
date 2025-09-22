@@ -2,7 +2,7 @@
 
     <div class="w-100 p-4">
 
-        <h3>Colaborator details</h3>
+        <h3>Detalhes colaborador </h3>
 
         <hr>
 

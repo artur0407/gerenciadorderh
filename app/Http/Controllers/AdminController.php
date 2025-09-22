@@ -10,8 +10,6 @@ class AdminController
 {
     public function home()
     {
-        Auth::user()->can('admin') ?: abort(403, 'Você não tem acesso a esta página');
-
         // collect all information about the organization
         $data = [];
 
