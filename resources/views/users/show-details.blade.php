@@ -14,9 +14,8 @@
                     <p>Name: <strong>{{ $colaborator->name }}</strong></p>
                     <p>Email: <strong>{{ $colaborator->email }}</strong></p>
                     <p>Role: <strong>{{ $colaborator->role }}</strong></p>
-                    <p>Permissions: </p>
+                    <p>Permissões: </p>
 
-                    <!-- permissions -->
                     @php
                         $permissions = json_decode($colaborator->permissions)
                     @endphp
@@ -26,7 +25,7 @@
                         @endforeach
                     </ul>
 
-                    <p>Department: <strong>{{ $colaborator->department->name ?? "Sem departamento" }}</strong></p>
+                    <p>Departamento: <strong>{{ $colaborator->department->name ?? "Sem departamento" }}</strong></p>
                     <p>Ativo: 
                         @empty($colaborator->email_verified_at)
                             <span class="badge bg-danger">No</span>
@@ -41,7 +40,7 @@
                     <p>CEP: <strong>{{ $colaborator->detail->zip_code }}</strong></p>
                     <p>Cidade: <strong>{{ $colaborator->detail->city }}</strong></p>
                     <p>Telefone: <strong>{{ $colaborator->detail->phone }}</strong></p>
-                    <p>Admission date: <strong>{{ $colaborator->detail->admission_date->format('d/m/Y') }}</strong></p>
+                    <p>Data de Admissão: <strong>{{ $colaborator->detail->admission_date->format('d/m/Y') }}</strong></p>
                     <p>Salário: <strong>{{ "R$ " . $colaborator->detail->salary }}</strong></p>
                 </div>
             </div>

@@ -54,7 +54,7 @@
             <div class="mb-3">
                 <label for="admission_date" class="form-label">Data de Admissão</label>
                 <input type="text" class="form-control" id="admission_date" name="admission_date" placeholder="00/00/0000"
-                    value="{{ old('admission_date', $colaborator?->detail->admission_date) }}">
+                    value="{{ old('admission_date', $colaborator?->detail->admission_date->format('d/m/Y')) }}">
                 @error('admission_date')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

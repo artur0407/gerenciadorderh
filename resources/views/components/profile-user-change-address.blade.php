@@ -1,5 +1,5 @@
 <div class="col-5">
-    <div class="border p-5 shadow-sm">
+    <div class="card border p-5 shadow-sm">
         <form action="{{ route('user.profile.update-user-address') }}" method="post">
 
             @csrf
