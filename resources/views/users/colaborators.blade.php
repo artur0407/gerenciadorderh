@@ -33,9 +33,9 @@
                             <td>{{ $colaborator->email }}</td>
                             <td>
                                 @empty($colaborator->email_verified_at)
-                                    <span class="badge bg-danger">No</span>
+                                    <span class="badge bg-danger">Não</span>
                                 @else
-                                    <span class="badge bg-success">Yes</span>
+                                    <span class="badge bg-success">Sim</span>
                         @endif
                         </td>
                         <td>{{ $colaborator->department->name ?? "Sem departamento" }}</td>
